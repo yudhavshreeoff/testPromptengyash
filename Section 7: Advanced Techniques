@@ -1,0 +1,103 @@
+7. Advanced Techniques
+
+These advanced techniques can help you take full control over prompt behavior—especially when dealing with complex or multi-step QA tasks.
+
+🔗 Prompt Chaining (Multi-Step Workflows)
+
+Definition: Break large tasks into logical steps and prompt each step separately or as a sequenced instruction.
+
+Prompt:
+
+List the steps to test 'reset password' flow. Then generate a Java + Selenide test case.
+
+Output:
+
+1. Navigate to login page
+2. Click 'Forgot Password'
+3. Enter email and click submit
+4. Verify confirmation message
+
+@Test
+public void testResetPasswordFlow() {
+    open("https://example.com/login");
+    $("#forgotPassword").click();
+    $("#email").setValue("test@example.com");
+    $("#submit").click();
+    $(".success").shouldHave(text("Reset link sent to your email"));
+}
+
+✅ Use for: complex features, step-by-step test generation, onboarding flows
+
+🧑‍💻 Role-Based Prompting
+
+Definition: Ask the model to act like a specific expert or role.
+
+Prompt:
+
+You are a senior QA automation engineer. Write a robust test for edge case where user submits signup form with blank email and password fields.
+
+Output:
+
+@Test
+public void testSignupEmptyFields() {
+    open("https://example.com/signup");
+    $("#signupButton").click();
+    $("#emailError").shouldHave(text("Email is required"));
+    $("#passwordError").shouldHave(text("Password is required"));
+}
+
+✅ Use for: shifting tone, increasing quality, setting domain focus
+
+🧾 Structured Output Prompting (JSON, Tables)
+
+Definition: Specify output format to be machine-parseable or documentation-ready.
+
+Prompt:
+
+Generate 3 test cases for the registration form. Return results in JSON with keys: name, input, expected_output.
+
+Output:
+
+[
+  {
+    "name": "Empty fields",
+    "input": {"email": "", "password": ""},
+    "expected_output": "Error for both fields"
+  },
+  {
+    "name": "Invalid email",
+    "input": {"email": "abc", "password": "Pass123"},
+    "expected_output": "Invalid email format"
+  }
+]
+
+✅ Use for: generating data, feeding tools, documenting test libraries
+
+🧠 System Instructions & Formatting Hints
+
+Definition: Add constraints about style, tone, and behavior inside the prompt.
+
+Prompt:
+
+Respond only with Java code. Use TestNG. Do not include explanations or extra output.
+
+✅ Use for: IDE use, Copilot completions, API responses
+
+📎 Referencing Code Snippets in Prompts
+
+Prompt:
+
+Here is a method `calculateTotal()`. Write unit tests for it assuming it takes a list of prices and returns a sum. Method:
+public int calculateTotal(List<Integer> prices) { return prices.stream().mapToInt(i -> i).sum(); }
+
+Output:
+
+@Test
+public void testCalculateTotal() {
+    List<Integer> prices = Arrays.asList(100, 200, 300);
+    int total = new MyClass().calculateTotal(prices);
+    assertEquals(600, total);
+}
+
+✅ Use for: internal unit testing, component-level QA, Copilot context filling
+
