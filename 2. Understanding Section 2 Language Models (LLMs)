@@ -1,0 +1,225 @@
+2. Understanding Language Models (LLMs)
+
+To use prompt engineering effectively, you must understand the tool behind the scenes: the Large Language Model (LLM). This is the AI brain that powers GitHub Copilot, ChatGPT, Claude, and others.
+
+🧠 What is an LLM?
+
+A Large Language Model is a machine learning model trained on a massive dataset of code, books, websites, documentation, and more. It predicts the next most likely word or token given your input.
+
+When you prompt ChatGPT or Copilot, you're starting a conversation where the model tries to complete your instruction based on patterns it has learned.
+
+🔍 Key Concepts for QA Engineers
+
+1. Tokens:
+
+LLMs work with tokens, not words.
+
+"Login to dashboard" = 3-4 tokens.
+
+GPT-4 can handle 32,000+ tokens (about 50+ pages).
+
+2. Temperature:
+
+Controls creativity.
+
+Low temp (0.2–0.4) = more accurate and consistent.
+
+High temp (0.8+) = more diverse and exploratory.
+
+✅ For QA, use lower temperature prompts.
+
+3. Context Window:
+
+Defines how much input the LLM can remember in one interaction.
+
+If your test case, scenario, and bug log all fit in that window, it can analyze them together.
+
+🧪 How LLMs Help in QA
+
+Use Case
+
+What the LLM Does
+
+Test Case Generation
+
+Fills in full methods with assertions
+
+Test Data Creation
+
+Generates fake but valid JSON data
+
+Log Summarization
+
+Analyzes and summarizes log files
+
+Code Explanation
+
+Breaks down legacy scripts line by line
+
+⚠️ Limitations You Should Know
+
+Hallucination: LLMs may invent classes or endpoints that don’t exist.
+
+Recency Gap: Copilot/ChatGPT may not know about very recent APIs or methods.
+
+No IDE Validation: LLM doesn’t run your code. Always test it.
+
+✅ Your role is to give clear, structured prompts—then review the output like you would from a junior QA intern.
+
+
+
+
+🔍 Key Concepts for QA Engineers
+
+1. Tokens (Real-World Example)
+
+Prompt:
+
+Write a test case in Java using Selenide to test 'Login to dashboard' functionality.
+
+Explanation:
+
+The phrase "Login to dashboard" is tokenized by the model as ~3-4 tokens.
+
+GPT-4 can process up to 32,000 tokens—ideal for long test suites.
+
+Generated Code Snippet:
+
+@Test
+public void testLoginFlow() {
+    open("https://example.com/login");
+    $("#username").setValue("testuser");
+    $("#password").setValue("testpass");
+    $("#loginBtn").click();
+    $(".dashboard").shouldBe(visible);
+}
+
+2. Temperature (Real-World Example)
+
+Prompt:
+
+Generate 3 edge case scenarios for login feature.
+
+At Temperature 0.2 (Low):
+
+- Empty username and password
+- Invalid password with valid username
+- SQL injection attempt in username field
+
+At Temperature 0.8 (High):
+
+- Typing password with trailing spaces
+- User pastes emojis into email field
+- Trying to login with uppercase username on lowercase match system
+
+✅ In QA, use low temperature (0.2–0.4) for consistency and accuracy.
+
+3. Context Window (Real-World Example)
+
+Prompt:
+
+Here’s a test plan + bug report. Suggest test cases:
+
+Test Plan:
+- Login
+- Dashboard Access
+
+Bug Report:
+Clicking "Pay Now" crashes app without payment method.
+
+Generated Response:
+
+1. Test login with correct and incorrect credentials.
+2. Verify dashboard loads after login.
+3. Attempt to click 'Pay Now' without selecting a payment method. Expect error message.
+
+✅ Since all content fit within the context window, the model combined both inputs into meaningful QA outputs.
+
+
+
+
+
+🧪 How LLMs Help in QA
+
+Use Case
+
+What the LLM Does
+
+Test Case Generation
+
+Fills in full methods with assertions
+
+Test Data Creation
+
+Generates fake but valid JSON data
+
+Log Summarization
+
+Analyzes and summarizes log files
+
+Code Explanation
+
+Breaks down legacy scripts line by line
+
+✅ Test Case Generation (Prompt + Output)
+
+Prompt:
+
+Write a Java test using Selenide to test the forgot password functionality with valid email input.
+
+Output:
+
+@Test
+public void testForgotPasswordFlow() {
+    open("https://example.com/login");
+    $("#forgotPasswordLink").click();
+    $("#email").setValue("testuser@example.com");
+    $("#submit").click();
+    $(".notification").shouldHave(text("Reset link sent"));
+}
+
+✅ Test Data Creation (Prompt + Output)
+
+Prompt:
+
+Generate 3 fake users with fields: name, email, isActive (true/false) as JSON.
+
+Output:
+
+[
+  {"name": "Riya Singh", "email": "riya.singh@example.com", "isActive": true},
+  {"name": "Vikram Das", "email": "vikram.das@example.com", "isActive": false},
+  {"name": "Sneha Patil", "email": "sneha.patil@example.com", "isActive": true}
+]
+
+✅ Log Summarization (Prompt + Output)
+
+Prompt:
+
+Summarize the key issues in this QA test log:
+[INFO] Login Passed
+[INFO] Dashboard Passed
+[ERROR] Payment test failed: NullPointerException on line 56
+[INFO] Logout Passed
+
+Output:
+
+Summary:
+- Login, Dashboard, and Logout tests passed.
+- Payment test failed due to NullPointerException at line 56.
+
+✅ Code Explanation (Prompt + Output)
+
+Prompt:
+
+Explain what the following Java code does:
+@Test
+public void checkTitle() {
+    open("https://myapp.com");
+    $("title").shouldHave(text("Welcome Page"));
+}
+
+Output:
+
+This test navigates to https://myapp.com and verifies that the page title contains the text "Welcome Page".
+It uses Selenide's syntax to interact with and assert DOM elements.
