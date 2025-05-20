@@ -1,0 +1,215 @@
+4. Prompt Patterns and Templates
+
+Prompt patterns help you reuse effective prompt structures across different testing needs. Think of them like reusable test case templates—but for LLMs.
+
+Let’s break down real prompt patterns you can use in Copilot, ChatGPT, or any other LLM interface for QA tasks.
+
+🔁 1. Code Generation
+
+Pattern Prompt:
+
+Write a Java method to [perform specific task] using [library or framework].
+
+Example:
+
+Write a Java method to validate email format using regex.
+
+Output:
+
+public boolean isValidEmail(String email) {
+    return email.matches("^[\w-\.+]*[\w-\.]\@[\w]+\.[a-z]{2,4}$");
+}
+
+✅ Use for: utility functions, helper classes, validations
+
+🧪 2. Test Case Generation
+
+Pattern Prompt:
+
+Write a [language] test using [test framework] and [UI/API library] to [describe user action]. Assert [expected result].
+
+Example:
+
+Write a Java test using TestNG and Selenide to test login with invalid password and assert error message.
+
+Output:
+
+@Test
+public void testInvalidLogin() {
+    open("https://example.com/login");
+    $("#username").setValue("user");
+    $("#password").setValue("wrong");
+    $("#submit").click();
+    $(".error").shouldHave(text("Invalid credentials"));
+}
+
+🐞 3. Bug Reproduction
+
+Pattern Prompt:
+
+Create a test case using [framework] to reproduce bug: [bug summary or steps].
+
+Example:
+
+Create a test case using Selenide to reproduce bug: clicking 'Apply Coupon' without entering code crashes the page.
+
+Output:
+
+@Test
+public void testApplyCouponWithoutCode() {
+    open("https://example.com/cart");
+    $("#applyCoupon").click();
+    $(".error").shouldHave(text("Coupon code required"));
+}
+
+📊 4. Test Summary / Log Analysis
+
+Pattern Prompt:
+
+Summarize test results/logs:
+[Paste logs here]
+
+Example:
+
+Summarize test results:
+[PASS] Login
+[FAIL] Payment – TimeoutException
+[PASS] Logout
+
+Output:
+
+Summary:
+- Login and Logout passed
+- Payment failed due to TimeoutException
+
+✅ Use for: quick CI/CD feedback or debugging
+
+🧹 5. Data Extraction
+Pattern Prompt:
+
+python
+Copy
+Edit
+Extract [data type] from this [input type] and return in [format].
+✅ Example 1: Extracting Email Addresses from HTML
+Prompt:
+
+pgsql
+Copy
+Edit
+Extract all email addresses from the following HTML snippet and return them in a JSON array format.
+
+<div>Contact us at support@myapp.com or feedback@myapp.com for help.</div>
+Output:
+
+json
+Copy
+Edit
+[
+  "support@myapp.com",
+  "feedback@myapp.com"
+]
+✅ Example 2: Extracting Failed Test Cases from Logs
+Prompt:
+
+csharp
+Copy
+Edit
+Extract all failed test case names from this test log and return in an array format:
+
+[INFO] Running testLogin
+[PASS] testLogin
+[INFO] Running testPayment
+[FAIL] testPayment - NullPointerException
+[INFO] Running testProfile
+[FAIL] testProfile - Timeout
+Output:
+
+json
+Copy
+Edit
+[
+  "testPayment",
+  "testProfile"
+]
+✅ Example 3: Extracting Field Names from JSON
+Prompt:
+
+csharp
+Copy
+Edit
+Extract all field names from this JSON object:
+
+{
+  "userId": 123,
+  "userName": "yash",
+  "isActive": true
+}
+Return them as a comma-separated list.
+Output:
+
+Copy
+Edit
+userId, userName, isActive
+✅ These extraction prompts are extremely useful in:
+
+Log parsing (e.g. CI outputs)
+
+Form validation (e.g. required field lists)
+
+Debugging (e.g. isolating error-prone modules)
+
+
+
+
+🔧 QA-Specific Prompt Patterns
+
+These patterns are tailored for daily QA engineering tasks. You can use them across manual test planning, automation, API checks, and more.
+
+1. UI Workflow Validation
+
+Prompt:
+
+Write a Selenide test in Java to verify that when the user logs in and navigates to the dashboard, the greeting banner "Welcome, [username]" is visible.
+
+Use Case: Full UI flow check post-login.
+
+2. API Contract Validation
+
+Prompt:
+
+Generate a Rest Assured test in Java to validate that the GET /api/orders returns an array of orders with keys: id, total, createdDate.
+
+Use Case: Contract testing for key API fields.
+
+3. Negative Scenario Prompt
+
+Prompt:
+
+Write a test in Java using Selenide to attempt login with empty fields and assert validation messages.
+
+Use Case: Form validation QA automation.
+
+4. Regression Flow Prompt
+
+Prompt:
+
+Create a high-level checklist of test scenarios to run before releasing the payments module.
+
+Use Case: For sprint-end QA planning or regression prompts.
+
+5. Accessibility Check Prompt
+
+Prompt:
+
+List accessibility test cases to validate WCAG 2.1 compliance for a login form.
+
+Use Case: Non-functional testing prompts.
+
+These QA-specific patterns ensure your prompts match real-world test coverage, helping both manual testers and automation engineers work faster with LLMs.
+
+
+
+
+
+
