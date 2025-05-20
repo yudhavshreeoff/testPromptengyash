@@ -105,3 +105,278 @@ Write a high-quality prompt to get Copilot to generate a Selenide + TestNG test.
 
 (Try writing the prompt and then improve it based on today’s rules!)
 
+
+
+🧪 Real-World Scenario: Update Profile – Email Validation
+
+Case: A user attempts to update their profile email without entering their current password. The system must reject the request and show an error message.
+
+Now, let's break this down into the 4 core prompt components:
+
+1. Instruction – What do you want?
+
+"Generate a UI test case in Java using Selenide and TestNG."
+
+This tells the AI to create a specific type of output—not just any answer, but a test case.
+
+2. Context – Tech stack, page behavior, scenario
+
+"The test should cover the user flow of updating their email in the profile page without entering their current password."
+
+This gives the AI the QA scenario and functional flow.
+
+3. Constraints – Format, length, and expectations
+
+"Use only Java syntax, Selenide with TestNG, and include both the error message assertion and validation of unchanged email."
+
+This limits how the LLM responds, making it structured and implementation-ready.
+
+4. Goal – What should success look like?
+
+"Test should assert the error: 'Please confirm your password to change email.' and confirm that the email field remains unchanged."
+
+This ensures the outcome aligns with the business requirement.
+
+🧾 Full Prompt:
+
+Write a UI test in Java using Selenide and TestNG to validate that if a user tries to change their email on the profile page without entering their current password, the application throws an error: 'Please confirm your password to change email.' Also verify that the email remains unchanged after the failed attempt.
+
+✅ Copilot/LLM Generated Output (Expected):
+
+@Test
+public void testEmailChangeWithoutPassword() {
+    open("https://example.com/profile");
+    $("#email").setValue("newemail@example.com");
+    $("#updateButton").click();
+    $(".error-message").shouldHave(text("Please confirm your password to change email."));
+    $("#email").shouldHave(value("currentemail@example.com"));
+}
+
+This example integrates all four key components and showcases how well-structured prompts lead to reliable, production-grade test cases.
+
+
+
+
+
+
+🧪 End-to-End Scenario – Zero-Shot QA Prompt
+
+Use Case: Testing the user registration form with missing required fields.
+
+Prompt:
+
+Write a Java TestNG test using Selenide to verify that when the user submits the signup form without entering an email, the application shows an error message "Email is required".
+
+Generated Output:
+
+@Test
+public void testSignupWithoutEmail() {
+    open("https://example.com/signup");
+    $("#name").setValue("Test User");
+    $("#password").setValue("Test@123");
+    $("#signupButton").click();
+    $(".error-message").shouldHave(text("Email is required"));
+}
+
+Why it works as Zero-Shot:
+
+You gave only the instruction with context, no example or prior code
+
+The model understood the intent, UI flow, and used correct HTML identifiers
+
+✅ Great for generating tests quickly when the task is common or simple.
+Definition: You ask the model to complete a task without providing any examples.
+
+Prompt:
+
+Write a Selenide test using TestNG to verify successful logout redirects the user to the login page.
+
+Expected Output:
+
+@Test
+public void testLogoutRedirection() {
+    open("https://example.com/dashboard");
+    $("#logout").click();
+    $(".login-form").shouldBe(visible);
+}
+
+Use Case: Fast when the model already understands the task structure (e.g., simple test generation).
+
+✅ Best For: Quick, repeatable prompts like UI flow checks.
+
+
+
+
+
+
+🧪 End-to-End Scenario – Chain-of-Thought Prompting
+
+Use Case: Testing profile photo upload functionality, including upload, preview, and save confirmation.
+
+Prompt:
+
+List the test steps to verify that a user can upload and save a new profile photo. Then generate a Java + Selenide test using TestNG.
+
+Model's Step-by-Step Response:
+
+Open profile settings page
+
+Click on the upload photo button
+
+Select a valid image file
+
+Preview should show the selected image
+
+Click save
+
+Verify success message appears
+
+Generated Test:
+
+@Test
+public void testProfilePhotoUpload() {
+    open("https://example.com/profile/settings");
+    $("#uploadPhoto").uploadFromClasspath("images/sample-photo.jpg");
+    $("#photoPreview").shouldBe(visible);
+    $("#savePhoto").click();
+    $(".toast-success").shouldHave(text("Profile photo updated successfully"));
+}
+
+Why it works:
+
+The LLM logically broke down the test scenario
+
+You get traceable reasoning AND production-ready test code
+
+✅ Best For: Exploratory workflows, new features, multi-step interactions
+Definition: Ask the model to reason through the task step-by-step.
+
+Prompt:
+
+List the test steps to verify profile name update. Then generate a Java + Selenide test.
+
+Model Response:
+
+Open profile page
+
+Edit name field
+
+Click save
+
+Verify success message
+
+Generated Test:
+
+@Test
+public void testUpdateProfileName() {
+    open("https://example.com/profile");
+    $("#name").setValue("Yash QA");
+    $("#save").click();
+    $(".toast-success").shouldHave(text("Profile updated"));
+}
+
+Use Case: For new workflows, bug reproduction, or multi-step UI flows.
+
+✅ Best For: Helping LLM break down complex tasks.
+
+
+
+
+⚙️ Prompt Optimization Techniques
+
+Prompt optimization is about getting consistent, accurate, and actionable outputs from LLMs like Copilot or ChatGPT by designing better instructions.
+Here are 3 major techniques explained with QA-specific examples:
+
+✏️ Technique 1: Use Action-Oriented Language
+
+Weak Prompt:
+
+Test login.
+
+🔴 Too vague – No framework, no scenario, no assertion.
+
+Optimized Prompt:
+
+Generate a Java TestNG test using Selenide to login with valid and invalid credentials. Assert dashboard access and error messages.
+
+✅ Why this works:
+
+Specifies language and framework
+
+Describes both flows
+
+Defines outcome
+
+Generated Output:
+
+@Test
+public void testLoginWithValidAndInvalid() {
+    open("https://example.com/login");
+    
+    // Invalid login
+    $("#username").setValue("wronguser");
+    $("#password").setValue("wrongpass");
+    $("#submit").click();
+    $(".error-message").shouldHave(text("Invalid credentials"));
+
+    // Valid login
+    $("#username").setValue("admin");
+    $("#password").setValue("admin123");
+    $("#submit").click();
+    $(".dashboard").shouldBe(visible);
+}
+
+🧩 Technique 2: Use Realistic Data & URLs
+
+Prompt:
+
+Write an API test using Rest Assured for POST /api/signup with this payload:
+{
+  "name": "testuser",
+  "email": "test@example.com"
+}
+Expect status 201 and success message.
+
+✅ Why this works:
+
+Provides endpoint
+
+Gives sample request data
+
+Defines response expectation
+
+Generated Output:
+
+@Test
+public void testUserSignup() {
+    given().contentType("application/json")
+           .body("{\"name\": \"testuser\", \"email\": \"test@example.com\"}")
+    .when().post("/api/signup")
+    .then().statusCode(201)
+           .body("message", equalTo("User created successfully"));
+}
+
+🧪 Technique 3: Define Output Format
+
+Prompt:
+
+Generate a Java test using Rest Assured and JUnit for GET /api/products. Only output Java code. No explanation.
+
+✅ Why this works:
+
+Reduces noise (no markdown or comments)
+
+Ensures IDE-ready output
+
+Generated Output:
+
+@Test
+public void testGetProducts() {
+    given().when()
+        .get("/api/products")
+    .then()
+        .statusCode(200)
+        .body("size()", greaterThan(0));
+}
+
+These techniques dramatically improve output precision, reduce hallucinations, and save editing time. They’re especially useful when prompting Copilot inside VSCode/IntelliJ.
