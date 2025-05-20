@@ -1,0 +1,211 @@
+📌 What is Prompt Engineering?
+Prompt Engineering is the skill of designing clear, structured, and purposeful instructions (called “prompts”) that guide AI tools like ChatGPT or GitHub Copilot to generate accurate and useful outputs.
+
+You’re not writing code—you’re writing instructions that generate code.
+You’re not coding from scratch—you’re guiding AI to code with you, like a smart junior dev.
+
+
+🛠 Example (QA Perspective)
+Poor prompt:
+
+“Write a test.”
+
+Copilot might generate anything—from a login test to a UI rendering check. No clarity.
+
+Better prompt:
+
+“Write a Java TestNG test case using Selenide to test login with valid and invalid credentials. Assert error message on failure and dashboard URL on success.”
+
+✅ Framework ✅ Data ✅ Assertions ✅ Output format
+This is what prompt engineering is about: precision, clarity, structure.
+
+
+
+
+🎯 Why Prompt Engineering Matters in QA
+As a QA engineer, you're constantly:
+
+Writing test cases
+
+Reproducing bugs
+
+Validating APIs
+
+Documenting edge cases
+
+Refactoring flaky scripts
+
+Prompt engineering helps you do all that faster by:
+
+Letting Copilot/ChatGPT do 70% of the groundwork
+
+Making edge case discovery 5x faster
+
+Reducing your time writing repetitive test logic
+
+Helping junior engineers write better code with AI guidance
+
+
+
+🎓 Real-World QA Use Cases
+Task	Prompted Output
+UI Automation (Selenide)	Complete test method with locator logic
+API Testing (Rest Assured)	Valid + invalid test cases + status code
+Test Data Generation	JSON/CSV with fake but valid entries
+Bug Report Reproduction	Test scenario based on description
+Gherkin Conversion	Feature → Given-When-Then template
+
+
+💡 Key Insight
+Prompt Engineering is not a hack—it’s a workflow skill.
+
+It’s like learning Git, Selenium, or BDD. It makes you more effective, not redundant.
+
+
+
+
+
+
+
+### 🎓 Real-World QA Use Cases (with Prompts + Code Snippets)
+
+| Task                       | Prompted Output                    |
+| -------------------------- | ---------------------------------- |
+| UI Automation (Selenide)   | Complete test method with locators |
+| API Testing (Rest Assured) | Valid + invalid test cases         |
+| Test Data Generation       | JSON/CSV with fake test users      |
+| Bug Report Reproduction    | Test scenarios from bug summary    |
+| Gherkin Conversion         | Feature → Given-When-Then          |
+
+---
+
+#### ✅ 1. UI Automation (Selenide)
+
+**Prompt:**
+
+```
+Write a Java TestNG test using Selenide to test login with valid and invalid credentials. Assert error message and dashboard redirection.
+```
+
+**Generated Code Snippet:**
+
+```java
+@Test
+public void testLoginValidAndInvalid() {
+    open("https://example.com/login");
+
+    // Invalid login
+    $("#username").setValue("wronguser");
+    $("#password").setValue("wrongpass");
+    $("#loginBtn").click();
+    $(".error-message").shouldHave(text("Invalid credentials"));
+
+    // Valid login
+    $("#username").setValue("admin");
+    $("#password").setValue("admin123");
+    $("#loginBtn").click();
+    $(".dashboard").shouldBe(visible);
+}
+```
+
+---
+
+#### ✅ 2. API Testing (Rest Assured)
+
+**Prompt:**
+
+```
+Write a Rest Assured test in Java to test POST /api/users with name and email. Expect 201 and error for missing fields.
+```
+
+**Generated Code Snippet:**
+
+```java
+@Test
+public void testCreateUser() {
+    // Valid
+    given().contentType("application/json")
+           .body("{ \"name\": \"John\", \"email\": \"john@example.com\" }")
+    .when().post("/api/users")
+    .then().statusCode(201);
+
+    // Invalid
+    given().contentType("application/json")
+           .body("{ \"name\": \"John\" }")
+    .when().post("/api/users")
+    .then().statusCode(400);
+}
+```
+
+---
+
+#### ✅ 3. Test Data Generation
+
+**Prompt:**
+
+```
+Generate 5 fake users in JSON with name, email, role fields.
+```
+
+**Output:**
+
+```json
+[
+  {"name": "Alice Rao", "email": "alice.rao@example.com", "role": "admin"},
+  {"name": "Karan Mehta", "email": "karan.m@example.com", "role": "user"}
+]
+```
+
+---
+
+#### ✅ 4. Bug Report Reproduction
+
+**Prompt:**
+
+```
+Create a test case in Java using Selenide to reproduce bug: clicking 'Pay Now' without selecting a card crashes the page.
+```
+
+**Generated Test Snippet:**
+
+```java
+@Test
+public void testPaymentWithoutCard() {
+    open("https://example.com/checkout");
+    $("#payNow").click();
+    $(".error-toast").shouldHave(text("Please select a card"));
+}
+```
+
+---
+
+#### ✅ 5. Gherkin Conversion
+
+**Prompt:**
+
+```
+Convert login feature to Gherkin:
+- User opens login page
+- Enters credentials
+- Clicks login
+- Sees dashboard
+```
+
+**Output:**
+
+```
+Feature: User Login
+
+  Scenario: Successful login
+    Given user is on the login page
+    When user enters valid username and password
+    And clicks the login button
+    Then user should be redirected to the dashboard
+```
+
+---
+
+Shall we now proceed to **Section 2: Understanding Language Models (LLMs)?**
+
+
+
