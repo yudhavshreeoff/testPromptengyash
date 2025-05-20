@@ -1,0 +1,243 @@
+ Prompt Engineering for QA Automation
+
+This section focuses on writing high-impact prompts for QA engineers who work with UI automation, API testing, and test case generation. Whether you're using ChatGPT, GitHub Copilot, or Claude, these patterns will help you turn a requirement into executable test code.
+
+✅ UI Test Case Writing Prompts (Selenium / Selenide)
+
+Prompt:
+
+Write a Java TestNG test using Selenide to validate the login page. Test both invalid and valid credentials. Assert error message and dashboard redirection.
+
+Output:
+
+@Test
+public void testLoginValidation() {
+    open("https://example.com/login");
+
+    // Invalid login
+    $("#username").setValue("wrong");
+    $("#password").setValue("invalid");
+    $("#submit").click();
+    $(".error-message").shouldHave(text("Invalid credentials"));
+
+    // Valid login
+    $("#username").setValue("admin");
+    $("#password").setValue("admin123");
+    $("#submit").click();
+    $(".dashboard").shouldBe(visible);
+}
+
+✅ API Test Prompts (Postman / Rest Assured)
+
+Prompt:
+
+Write a Java test using Rest Assured to validate POST /api/login with valid and invalid payloads. Assert 200 and 401 status codes.
+
+Output:
+
+@Test
+public void testLoginAPI() {
+    // Valid
+    given().contentType("application/json")
+           .body("{\"email\": \"admin@test.com\", \"password\": \"admin123\"}")
+    .when().post("/api/login")
+    .then().statusCode(200);
+
+    // Invalid
+    given().contentType("application/json")
+           .body("{\"email\": \"fake@test.com\", \"password\": \"wrong\"}")
+    .when().post("/api/login")
+    .then().statusCode(401);
+}
+
+✅ Edge Case Generation
+
+Prompt:
+
+List 5 edge test scenarios for the signup form which includes name, email, and password.
+
+Output:
+
+1. Empty all fields and submit
+2. Valid name but invalid email format
+3. Password less than 6 characters
+4. Email with special characters and spaces
+5. Same email used twice (duplicate entry)
+
+✅ Converting Test Scenarios to Test Scripts
+
+Prompt:
+
+Given this scenario: "User should not be able to update profile without authentication", write a Selenide test in Java to validate it.
+
+Output:
+
+@Test
+public void testProfileUpdateWithoutLogin() {
+    open("https://example.com/profile");
+    $("#name").setValue("New Name");
+    $("#saveBtn").click();
+    $(".auth-warning").shouldHave(text("Please log in to continue"));
+}
+
+✅ Prompting GitHub Copilot for QA Tasks
+
+In Copilot, prompt using code comments:
+
+// Test: Validate payment failure with expired card using Rest Assured
+
+Copilot Suggestion:
+
+@Test
+public void testPaymentWithExpiredCard() {
+    given().contentType("application/json")
+           .body("{\"cardNumber\":\"4111-1111-1111-1111\", \"expiry\":\"01/22\"}")
+    .when().post("/api/pay")
+    .then().statusCode(402)
+           .body("error", equalTo("Card expired"));
+}
+
+✅ These prompt styles make you faster, reduce hand-written boilerplate, and let you shift from manual writing to AI-assisted QA coding.
+
+
+
+
+
+
+✅ Prompting GitHub Copilot for QA Tasks
+
+Here are effective tips and techniques with examples you can use inside GitHub Copilot to generate high-quality QA code faster:
+
+💬 1. Use Code Comments to Drive Suggestions
+
+Prompt:
+
+// Test: Validate login with invalid credentials using Selenide
+
+Expected Output:
+
+@Test
+public void testInvalidLogin() {
+    open("https://example.com/login");
+    $("#username").setValue("wronguser");
+    $("#password").setValue("wrongpass");
+    $("#submit").click();
+    $(".error-message").shouldHave(text("Invalid credentials"));
+}
+
+📦 2. Be Explicit with Frameworks
+
+Prompt:
+
+// Write a Rest Assured + JUnit test for POST /api/login with valid payload
+
+Expected Output:
+
+@Test
+public void testLoginValid() {
+    given().contentType("application/json")
+           .body("{\"email\":\"test@qa.com\",\"password\":\"test123\"}")
+    .when().post("/api/login")
+    .then().statusCode(200);
+}
+
+🧪 3. Prompt for Edge Cases
+
+Prompt:
+
+// Test: Password field too short – expect validation error
+
+Expected Output:
+
+@Test
+public void testShortPasswordValidation() {
+    open("https://example.com/signup");
+    $("#password").setValue("123");
+    $("#signupBtn").click();
+    $(".error-message").shouldHave(text("Password must be at least 6 characters"));
+}
+
+📜 4. Break Prompts into Steps (Comment Sequences)
+
+Prompt Series:
+
+// Step 1: Navigate to profile page
+// Step 2: Leave email empty and click update
+// Step 3: Assert 'Email is required' error
+
+Output:
+
+@Test
+public void testEmailEmptyOnProfileUpdate() {
+    open("https://example.com/profile");
+    $("#email").clear();
+    $("#saveBtn").click();
+    $(".error").shouldHave(text("Email is required"));
+}
+
+🧩 5. Use In-Line Examples
+
+Prompt:
+
+// $("#username").setValue("admin");
+// Generate same for password field
+
+Output:
+
+$("#password").setValue("admin123");
+
+🔁 6. Use Delimiters for Template-Based Prompts
+
+Prompt:
+
+// POST request to /api/user with {{email}} and {{password}}, return 200
+
+Output:
+
+body("{\"email\":\"{{email}}\",\"password\":\"{{password}}\"}")
+
+🧹 7. Prompt for Cleanup, Teardown & Assertions
+
+Prompt:
+
+// Add cleanup code to clear browser cookies after test
+
+Output:
+
+@AfterMethod
+public void tearDown() {
+    clearBrowserCookies();
+    closeWebDriver();
+}
+
+📚 8. Build Prompting Playbooks
+
+Use comment libraries like:
+
+// UI: login failure + assert toast error
+// API: invalid token returns 403
+// Gherkin: forgot password scenario
+
+✅ Pro Tip:
+
+@Test
+public void shouldShowErrorWhenLoginFails() { ... }
+
+Use human-readable test names for Copilot to better infer context and intent.
+
+In Copilot, prompt using code comments:
+
+// Test: Validate payment failure with expired card using Rest Assured
+
+Copilot Suggestion:
+
+@Test
+public void testPaymentWithExpiredCard() {
+    given().contentType("application/json")
+           .body("{\"cardNumber\":\"4111-1111-1111-1111\", \"expiry\":\"01/22\"}")
+    .when().post("/api/pay")
+    .then().statusCode(402)
+           .body("error", equalTo("Card expired"));
+}
+
+✅ These prompt styles make you faster, reduce hand-written boilerplate, and let you shift from manual writing to AI-assisted QA coding.
