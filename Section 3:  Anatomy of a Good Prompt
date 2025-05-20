@@ -1,0 +1,107 @@
+3. Anatomy of a Good Prompt
+
+The quality of your prompt directly affects the quality of the AI’s response.
+Just like a test case needs preconditions, steps, and expected output—your prompt needs structure.
+
+🧱 Components of a Great Prompt
+
+Instruction – What do you want? ("Generate a test")
+
+Context – Framework, language, data, method, etc.
+
+Constraints – Format, length, error handling, what to avoid
+
+Goal – What’s the success condition?
+
+🧪 QA Prompt Example Breakdown
+
+Prompt:
+
+Write a Java test using TestNG and Selenide to test login with valid and invalid inputs. Assert error messages and verify dashboard redirect.
+
+Why it works:
+✅ Instruction: "Write a test"✅ Context: Java, TestNG, Selenide, login form✅ Constraints: Include valid and invalid, assertion logic✅ Goal: Test for error + success flows
+
+🧠 Prompt Types with QA Examples
+
+1. Zero-Shot Prompting
+
+Give the instruction without examples
+Prompt:
+
+Generate a Selenide test to verify logout redirects to login page.
+
+2. Few-Shot Prompting
+
+Provide 1–2 examples, ask AI to match pattern
+Prompt:
+
+Example 1:
+@Test public void testLogin() {...}
+Example 2:
+@Test public void testSignup() {...}
+Now generate a test for forgot password.
+
+3. Chain-of-Thought Prompting
+
+Ask the AI to reason step-by-step
+Prompt:
+
+List steps to test profile update, then generate Selenide test for it.
+
+Response:
+
+Open profile page
+
+Edit name field
+
+Click save
+
+Assert success message
+
+⚙️ Prompt Optimization Techniques
+
+✏️ Technique 1: Use Action-Oriented Language
+
+Instead of: "Test login"
+Write: "Generate a Selenide TestNG test to login with invalid credentials and verify error banner."
+
+🧩 Technique 2: Use Data & URLs
+
+Use this payload: { "name": "test", "email": "test@domain.com" }
+Endpoint: POST /api/signup
+
+🧪 Technique 3: Define the Format
+
+Prompt:
+
+Respond only in Java. No explanations. Use Rest Assured with JUnit.
+
+✅ Do's & Don'ts for QA Prompting
+
+✅ Do:
+
+Be specific with inputs, outputs, and tools
+
+Use few-shot examples for format control
+
+Include assert expectations
+
+❌ Don't:
+
+Say "Make a test"
+
+Leave out framework info
+
+Mix multiple requests in one vague sentence
+
+🧠 Practice Prompt Challenge (Try Yourself)
+
+Scenario:
+User tries to update their email without verifying password. App should reject update.
+
+Task:
+Write a high-quality prompt to get Copilot to generate a Selenide + TestNG test.
+
+(Try writing the prompt and then improve it based on today’s rules!)
+
