@@ -1,0 +1,59 @@
+PPT 
+
+1)Prompt Engineering for QA & GitHub Copilot
+
+2)What is Prompt Engineering?
+Crafting clear prompts to get quality outputs from AI tools.
+Like giving detailed instructions to a junior dev.
+Used with ChatGPT, Copilot, Claude, etc.
+
+3)Why Prompt Engineering Matters in QA
+Faster test generation (Selenium, API tests)
+Edge case discovery & documentation
+Code review assistance & bug reproduction
+
+4)How LLMs Work
+Token-based prediction engine
+Temperature controls randomness
+Context window defines memory (e.g., 32K tokens in GPT-4)
+
+5)Anatomy of a Good Prompt
+Instruction + Context + Constraints
+Use Zero-shot, Few-shot, or Chain-of-thought formats
+Be specific about frameworks, inputs, and outputs
+
+6)QA Prompt Templates
+UI Test: 'Write Selenide test for login success/failure'
+API Test: 'Rest Assured test for POST /users with schema validation'
+Edge Cases: 'List 5 test scenarios for form with email and password'
+
+7)Prompting GitHub Copilot
+Use comments to guide Copilot suggestions
+Break down logic into readable, testable chunks
+Add assertions and expected results to improve quality
+
+8)Advanced Prompting Techniques
+Prompt Chaining: Break tasks into steps
+Role Prompts: 'You are a senior QA engineer...'
+Structured Output: 'Respond in JSON with keys: test_name, input...'
+
+9)Debugging and Iterating Prompts
+Identify vague vs overloaded prompts
+Refine step-by-step and test outputs
+Build a PromptPlaybook.md to save working versions
+
+10)Collaborative Prompting
+Treat prompts like test cases: review & version them
+Create prompt libraries per use case (UI, API, Test Data)
+Onboard teammates with shared examples
+
+11)Ethics & Guardrails
+Avoid leaking credentials or private APIs
+Always review AI-generated code manually
+Use only enterprise-grade tools like Copilot Enterprise
+
+12)Future of Prompt Engineering
+Agents: Self-prompting workflows
+RAG: Use internal docs in generation
+CI/CD: Prompt-triggered pipelines for test suggestions
+
