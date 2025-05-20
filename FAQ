@@ -1,0 +1,31 @@
+❓ Prompt Engineering FAQ (For QA Teams Using GitHub Copilot)
+
+Q1: What is prompt engineering in simple terms?It’s writing clear and specific instructions to get useful responses from AI tools like ChatGPT or Copilot.
+
+Q2: How is it different from traditional coding?Prompting is about asking the right questions or giving guidance to generate code, tests, or summaries using natural language.
+
+Q3: How do I prompt Copilot to write Selenium or API tests?Start with a detailed comment, e.g., // Test login with valid and invalid credentials using Selenide
+
+Q4: Why is my Copilot output missing assertions?You probably didn’t include expected outcomes. Add: // Assert dashboard appears on success, error message on failure.
+
+Q5: Can Copilot read my whole repo?In Copilot Enterprise, yes—context-aware completions use local file and repo info.
+
+Q6: What if the AI hallucinates methods or code?Treat AI output as a draft. Verify method names, endpoints, and logic manually.
+
+Q7: Can I ask Copilot or ChatGPT for edge cases?Yes. Prompt: "List 5 edge cases for email input field."
+
+Q8: Is it safe to paste production data or tokens in prompts?No. Avoid any confidential inputs unless you’re using secure internal tools.
+
+Q9: How can I reuse successful prompts?Save them in a PromptPlaybook.md or team wiki. Tag them by use case.
+
+Q10: Can prompt engineering generate test data too?Absolutely. Prompt: "Generate 10 fake users with name, email, and role in JSON."
+
+Q11: How do I make outputs consistent and usable?Add formatting instructions like: “Respond only in JSON format.”
+
+Q12: What’s the best way to teach this to my team?Run live demos, A/B prompt challenges, and code-review prompts in group sessions.
+
+Q13: How do I stay updated?Follow OpenAI, GitHub Copilot, and LangChain blogs or developer YouTube channels.
+
+Q14: Can I automate prompting in CI/CD?Yes. Combine GitHub Actions + ChatGPT API to auto-generate tests or summaries.
+
+Q15: One thing to avoid in prompting?Avoid vague or overly broad instructions like “Write some tests.” Be intentional and explicit.
