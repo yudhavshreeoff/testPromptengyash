@@ -1,0 +1,59 @@
+GitHub Copilot Enterprise brings context-awareness and security to Copilot suggestions inside your organization’s codebase. Here’s how to use it effectively for QA:
+
+🔐 What Makes Copilot Enterprise Different?
+
+Contextual Suggestions: Reads your repo, project files, and test structure.
+
+Secure by Default: Avoids leaking external code into completions.
+
+Enterprise Integration: Works inside your organization’s VSCode or IntelliJ setup.
+
+✅ Copilot QA Prompting Tactics with Enterprise Context
+
+1. Project-Aware Prompts
+
+// Write a test for UserService.registerUser method
+
+➡ Copilot uses your actual UserService class to build a relevant test based on implementation.
+
+2. Prompting with Class References
+
+// Test the controller logic for POST /checkout using CheckoutController
+
+➡ Copilot will autocomplete based on controller structure and return types.
+
+3. Generate Test Data Based on Internal Models
+
+// Create test data for UserRequest DTO with name, email, and isActive
+
+➡ Copilot uses your DTO fields for accurate test data.
+
+🧠 Best Practices for QA in Copilot Enterprise
+
+📌 Use file-local prompts: The more nearby context (like imports or class usage), the better Copilot performs.
+
+🧪 Structure tests in layers: Prompt for unit-level tests, then integration.
+
+🧱 Avoid vague comments: Replace "Add test" with "Add Selenide test for cart item deletion"
+
+🔄 Use workspace-wide Copilot Chat: Ask Copilot for "edge cases for CartService.addItem()"
+
+🛠️ Train your team: Document reusable prompts, share them across QA sprints.
+
+🔧 Example: Enterprise-Aware Copilot Prompt
+
+Prompt (in file):
+
+// Test: Ensure duplicate emails cannot be registered using UserService
+
+Copilot Output:
+
+@Test
+public void shouldNotAllowDuplicateEmail() {
+    UserRequest req = new UserRequest("test@example.com", "John");
+    userService.registerUser(req);
+    assertThrows(EmailAlreadyExistsException.class, () -> userService.registerUser(req));
+}
+
+✅ With Copilot Enterprise, this prompt uses actual code references from your repo to deliver accurate suggestions with internal model context.
+
